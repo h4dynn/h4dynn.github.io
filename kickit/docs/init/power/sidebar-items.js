@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["force_poweroff","poweroff"],"static":["POWER_OFF_READY"],"struct":["PowerInt"]};

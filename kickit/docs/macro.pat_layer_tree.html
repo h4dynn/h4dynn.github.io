@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Extract value from heavily layered types after matching multiple patterns"><title>pat_layer_tree in kickit - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-0c87338a.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="kickit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.99.0 (b940084d7 2026-09-28)" data-channel="1.99.0" data-search-js="search-cf4fc35e.js" data-stringdex-js="stringdex-b5109af9.js" data-settings-js="settings-170eb4bf.js" ><script src="../static.files/storage-41dd4d93.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-417ebf0a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-9f56287d.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc macro"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">pat_layer_tree</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../kickit/index.html">kickit</a><span class="version">26.10.1</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">pat_<wbr>layer_<wbr>tree</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#motivation" title="Motivation">Motivation</a></li><li><a href="#example" title="Example">Example</a></li><li><a href="#pattern-syntax" title="Pattern syntax">Pattern syntax</a><ul><li><a href="#struct--enum-tuple" title="Struct &#38; enum tuple">Struct &amp; enum tuple</a></li><li><a href="#struct--enum-field" title="Struct &#38; enum field">Struct &amp; enum field</a></li><li><a href="#closure" title="Closure">Closure</a></li></ul></li><li><a href="#implementation" title="Implementation">Implementation</a><ul><li><a href="#expansion" title="Expansion">Expansion</a></li></ul></li></ul></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="index.html">In crate kickit</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="index.html">kickit</a></div><h1>Macro <span class="macro">pat_<wbr>layer_<wbr>tree</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/kickit/macros.rs.html#555-610">Source</a> </span></div><pre class="rust item-decl"><code>macro_rules! pat_layer_tree {
+    {$parent: expr =&gt; $(|$object: tt|)? $any: path $({$field: ident})? =&gt; $($tail: tt)*} =&gt; { ... };
+    ($parent: expr =&gt; |$object: path| $fn_once: path) =&gt; { ... };
+    ($parent: expr =&gt; |$object: path { $field: ident }| $fn_once: expr) =&gt; { ... };
+    ($parent: expr =&gt; $object: path { $field: ident }) =&gt; { ... };
+    ($parent: expr =&gt; $object: path) =&gt; { ... };
+    (@let $__branch: ident, $($t: tt)*) =&gt; { ... };
+}</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Extract value from heavily layered types after matching multiple patterns</p>
+<h2 id="motivation"><a class="doc-anchor" href="#motivation">§</a>Motivation</h2>
+<p>This condenses <code>if let</code>-style conditions which return a singular value into 1 macro call, the aim is
+to reduce boilerplate &amp; help maintain code readability.</p>
+<h2 id="example"><a class="doc-anchor" href="#example">§</a>Example</h2>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="comment">// Due to code complexity, resolving to the code integer requires a long `if let` statement
+</span><span class="kw">if let </span>ServiceBody::RunOnce { code, .. } = <span class="kw-2">&amp;</span>service.body &amp;&amp; <span class="kw">let </span><span class="prelude-val">Some</span>(status) = code.get() &amp;&amp;
+    <span class="kw">let </span><span class="prelude-val">Some</span>(code_int) = status.code()
+{
+  <span class="prelude-val">Some</span>(code_int)
+}
+<span class="kw">else </span>{
+  <span class="prelude-val">None
+</span>}
+
+<span class="comment">// ...which can be collapsed into this pattern tree
+</span><span class="macro">pat_layer_tree!</span>(<span class="kw-2">&amp;</span>service.body =&gt; ServiceBody::RunOnce { code } =&gt; |<span class="prelude-val">Some</span>| OnceLock::get =&gt; |<span class="prelude-val">Some</span>| ExitStatus::code)</code></pre></div><h2 id="pattern-syntax"><a class="doc-anchor" href="#pattern-syntax">§</a>Pattern syntax</h2>
+<p>Multiple possible patterns are supported, represented in a custom-way (while attempting to be as close
+to Rust’s native syntax, however).</p>
+<h3 id="struct--enum-tuple"><a class="doc-anchor" href="#struct--enum-tuple">§</a>Struct &amp; enum tuple</h3>
+<p>This pattern is taken from <code>if let</code> syntax.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let </span>lucky_number: <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;u8&gt;, ()&gt; = <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="number">7</span>));
+
+<span class="comment">// Extract `7` from Ok &amp; Some variant. If of any other variant, `None` is returned.
+</span><span class="macro">assert_eq!</span>(<span class="macro">pat_layer_tree!</span>(lucky_number =&gt; <span class="prelude-val">Ok </span>=&gt; <span class="prelude-val">Some</span>), <span class="prelude-val">Some</span>(<span class="number">7</span>));</code></pre></div><h3 id="struct--enum-field"><a class="doc-anchor" href="#struct--enum-field">§</a>Struct &amp; enum field</h3>
+<p>This pattern is taken from <code>if let</code> syntax.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">struct </span>FavoriteDrink
+{
+  liquor: bool,
+  name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str
+}
+
+<span class="kw">let </span>russian = <span class="prelude-val">Some</span>(FavoriteDrink { liquor: <span class="bool-val">true</span>, name: <span class="string">"vodka" </span>});
+<span class="kw">let </span>brit = <span class="prelude-val">Some</span>(FavoriteDrink { liquor: <span class="bool-val">false</span>, name: <span class="string">"cider" </span>});
+
+<span class="macro">assert_eq!</span>(<span class="macro">pat_layer_tree!</span>(russian =&gt; <span class="prelude-val">Some </span>=&gt; FavoriteDrink { name }), <span class="prelude-val">Some</span>(<span class="string">"vodka"</span>));
+<span class="macro">assert_eq!</span>(<span class="macro">pat_layer_tree!</span>(brit =&gt; <span class="prelude-val">Some </span>=&gt; FavoriteDrink { name }), <span class="prelude-val">Some</span>(<span class="string">"cider"</span>));</code></pre></div><h3 id="closure"><a class="doc-anchor" href="#closure">§</a>Closure</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="attr">#[derive(Debug)]
+</span><span class="kw">struct </span>Process
+{
+  id: u32,
+  name: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str
+}
+ 
+<span class="kw">static </span>PROCESS: OnceLock&lt;Process&gt; = OnceLock::new();
+
+<span class="comment">// value not yet initialized
+</span><span class="macro">assert!</span>(<span class="macro">pat_layer_tree!</span>(<span class="kw-2">&amp;</span>PROCESS =&gt; |<span class="prelude-val">Some</span>| OnceLock::get =&gt; Process { id }).is_none());
+
+PROCESS.set(Process { id: std::process::id(), name: <span class="string">"closure_test" </span>}).unwrap();
+<span class="comment">// now the value has been set!
+</span><span class="macro">eprintln!</span>(<span class="string">"pid: {}"</span>, <span class="macro">pat_layer_tree!</span>(<span class="kw-2">&amp;</span>PROCESS =&gt; |<span class="prelude-val">Some</span>| OnceLock::get =&gt; Process { id }).unwrap());</code></pre></div><h2 id="implementation"><a class="doc-anchor" href="#implementation">§</a>Implementation</h2>
+<p>This macro is an <a href="https://lukaswirth.dev/tlborm/decl-macros/patterns/tt-muncher.html">incremental TT muncher</a>. This is so that we can differentiate between the last
+(“tail”) item and the starting (“head”) items one at a time, which also allows us to parse different
+patterns in 1 macro call instead of being limited to one pattern for each call.</p>
+<h3 id="expansion"><a class="doc-anchor" href="#expansion">§</a>Expansion</h3>
+<p>Input:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let </span>happy: <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;, ()&gt; = <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="bool-val">true</span>));
+
+<span class="kw">let _ </span>= <span class="macro">pat_layer_tree!</span>(happy =&gt; <span class="prelude-val">Ok </span>=&gt; <span class="prelude-val">Some</span>);</code></pre></div>
+<p>Output:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let </span>happy: <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;bool&gt;, ()&gt; = <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="bool-val">true</span>));
+
+<span class="kw">let _ </span>= {
+  <span class="kw">if let </span><span class="prelude-val">Ok</span>(__inner) = happy
+  {
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(__final) = __inner
+    {
+      <span class="prelude-val">Some</span>(__final)
+    }
+    <span class="kw">else </span>{
+      <span class="prelude-val">None
+    </span>}
+  }
+  <span class="kw">else </span>{
+    <span class="prelude-val">None
+  </span>}
+};</code></pre></div>
+<p><strong>Note:</strong> value names <code>__inner</code> and <code>__final</code> are used here for clarity, different names are used for
+assigning in the macro implementation</p>
+</div></details></section></div></main></body></html>

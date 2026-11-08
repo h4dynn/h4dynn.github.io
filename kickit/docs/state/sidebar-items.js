@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["InitState"],"macro":[["state",1]],"static":["INIT_STATE"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["DynamicOwnershipTakeError","Owner"],"struct":["DynamicOwnership"],"trait":["OwnerIdentity"]};

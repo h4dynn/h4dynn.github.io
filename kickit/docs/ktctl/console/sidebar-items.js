@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Error","StdResult"],"macro":[["inner_fatal",1],["warn",1]],"mod":["prelude"],"struct":["ErrorTrace"],"type":["BasicResult","Result"]};

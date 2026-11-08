@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Colour"],"macro":[["error_ty",1],["guard",1]],"mod":["prelude"],"struct":["FmtStr","FmtString"],"trait":["AssessError","Colourize","ErrorResult","ExtendWithSubject","HandleError","ReturnError"]};

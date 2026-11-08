@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Pattern","ServiceBody"],"mod":["cache","lifetime","logger","owner_id","sandbox","user"],"static":["STANDARD_SERVICES"],"struct":["GenericService","Root","RunDirectory","ServiceConfig","ServiceId","Supervisor","User"],"trait":["ServiceLifetime"],"type":["Service","UService"]};

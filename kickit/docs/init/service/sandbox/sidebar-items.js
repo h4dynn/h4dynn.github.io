@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["NsFlag"],"fn":["externalize"],"mod":["command"],"struct":["BindMounts","NsFlags","Sandbox","SandboxConfig"],"trait":["SandboxCommand"]};

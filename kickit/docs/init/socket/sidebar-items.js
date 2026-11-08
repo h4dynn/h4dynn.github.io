@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":[["capability_check",1],["relay",1],["socket_guard",1]],"trait":["Open"]};

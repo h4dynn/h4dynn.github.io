@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["source"],"mod":["Defaults"],"static":["TARGET"],"struct":["Config","Target"]};

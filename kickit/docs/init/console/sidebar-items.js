@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Error","InitLogEntry","StdResult"],"fn":["dbg_eprintln","fall_to_emergency_shell","log"],"macro":[["debug_cc",1],["fmt_error_trace",1],["inner_fatal",1]],"mod":["prelude"],"static":["QUIET"],"struct":["ErrorTrace"],"type":["BasicResult","Result"]};
