@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="time-format"><title>time_format - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-0c87338a.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="time_format" data-themes="" data-resource-suffix="" data-rustdoc-version="1.99.0 (b940084d7 2026-09-28)" data-channel="1.99.0" data-search-js="search-cf4fc35e.js" data-stringdex-js="stringdex-b5109af9.js" data-settings-js="settings-170eb4bf.js" ><script src="../static.files/storage-41dd4d93.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-417ebf0a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-9f56287d.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc mod crate"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Crate time_format</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../time_format/index.html">time_<wbr>format</a><span class="version">1.2.4</span></h2></div><div class="sidebar-elems"><ul class="block"><li><a id="all-types" href="all.html">All Items</a></li></ul><section id="rustdoc-toc"><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#time-format" title="time-format">time-format</a><ul><li><a href="#features" title="Features">Features</a></li><li><a href="#why-time-format" title="Why time-format?">Why time-format?</a></li><li><a href="#installation" title="Installation">Installation</a></li><li><a href="#basic-usage" title="Basic Usage">Basic Usage</a></li><li><a href="#common-format-directives" title="Common Format Directives">Common Format Directives</a></li><li><a href="#comparison-with-other-time-libraries" title="Comparison with Other Time Libraries">Comparison with Other Time Libraries</a></li><li><a href="#related-crates" title="Related Crates">Related Crates</a></li><li><a href="#examples" title="Examples">Examples</a></li><li><a href="#contributing" title="Contributing">Contributing</a></li><li><a href="#license" title="License">License</a></li></ul></li></ul><h3><a href="#structs">Crate Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#enums" title="Enums">Enums</a></li><li><a href="#functions" title="Functions">Functions</a></li><li><a href="#types" title="Type Aliases">Type Aliases</a></li></ul></section><div id="rustdoc-modnav"></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1>Crate <span>time_<wbr>format</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/time_format/lib.rs.html#1-973">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="time-format"><a class="doc-anchor" href="#time-format">§</a>time-format</h2>
+<p><a href="https://crates.io/crates/time-format"><img src="https://img.shields.io/crates/v/time-format.svg" alt="Crates.io" /></a>
+<a href="https://docs.rs/time-format"><img src="https://docs.rs/time-format/badge.svg" alt="Documentation" /></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" /></a></p>
+<p>A lightweight, zero-dependency Rust crate for formatting Unix timestamps in both UTC and local time, with millisecond precision.</p>
+<h3 id="features"><a class="doc-anchor" href="#features">§</a>Features</h3>
+<ul>
+<li>🚀 <strong>Zero dependencies</strong> - No external crates needed</li>
+<li>🌐 <strong>Multiple timezones</strong> - Support for both UTC and local time zones</li>
+<li>⏱️ <strong>Millisecond precision</strong> - High-resolution timestamp formatting</li>
+<li>🧩 <strong>Component access</strong> - Split timestamps into their individual components</li>
+<li>📅 <strong>Standard formats</strong> - Built-in support for ISO 8601, RFC 3339, RFC 2822, and more</li>
+<li>🔄 <strong>Custom formatting</strong> - Flexible formatting using C’s <code>strftime</code> patterns</li>
+<li>⚡ <strong>Performance</strong> - Direct FFI bindings to system time functions</li>
+</ul>
+<h3 id="why-time-format"><a class="doc-anchor" href="#why-time-format">§</a>Why time-format?</h3>
+<p><strong>Simple things should be simple.</strong></p>
+<p>When you just need to format a timestamp in a standardized way like ISO 8601 or get time components, you shouldn’t need to pull in complex dependencies, understand type conversion hierarchies, or deal with feature flags.</p>
+<p><strong>time-format</strong> excels at:</p>
+<ul>
+<li><strong>Minimalism</strong>: Zero dependencies means faster builds and smaller binaries</li>
+<li><strong>Simplicity</strong>: Clear and intuitive API with straightforward error handling</li>
+<li><strong>Performance</strong>: Thin wrapper over system time functions for minimal overhead</li>
+<li><strong>Common formats</strong>: Built-in support for the most widely used date formats</li>
+</ul>
+<p>It’s the ideal choice when you just need timestamp formatting without the complexity of full-featured time libraries.</p>
+<h3 id="installation"><a class="doc-anchor" href="#installation">§</a>Installation</h3>
+<p>Add to your <code>Cargo.toml</code>:</p>
+<div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+time-format = &quot;1.2.1&quot;</code></pre></div><h3 id="basic-usage"><a class="doc-anchor" href="#basic-usage">§</a>Basic Usage</h3><h4 id="getting-the-current-time"><a class="doc-anchor" href="#getting-the-current-time">§</a>Getting the Current Time</h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="comment">// Get current time in seconds
+</span><span class="kw">let </span>ts = time_format::now().unwrap();
+
+<span class="comment">// Get current time with millisecond precision
+</span><span class="kw">let </span>ts_ms = time_format::now_ms().unwrap();</code></pre></div><h4 id="converting-from-systemtime"><a class="doc-anchor" href="#converting-from-systemtime">§</a>Converting from SystemTime</h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::time::SystemTime;
+
+<span class="comment">// Convert a SystemTime to a TimeStamp (seconds)
+</span><span class="kw">let </span>system_time = SystemTime::now();
+<span class="kw">let </span>ts = time_format::from_system_time(system_time).unwrap();
+
+<span class="comment">// Convert a SystemTime to a TimeStampMs (with millisecond precision)
+</span><span class="kw">let </span>ts_ms = time_format::from_system_time_ms(system_time).unwrap();</code></pre></div><h4 id="splitting-a-timestamp-into-components"><a class="doc-anchor" href="#splitting-a-timestamp-into-components">§</a>Splitting a Timestamp into Components</h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="comment">// Get components in UTC
+</span><span class="kw">let </span>ts = time_format::now().unwrap();
+<span class="kw">let </span>components = time_format::components_utc(ts).unwrap();
+<span class="macro">println!</span>(<span class="string">"Current hour: {}"</span>, components.hour);
+
+<span class="comment">// Available components:
+// - sec (0-59)
+// - min (0-59)
+// - hour (0-23)
+// - month_day (1-31)
+// - month (1-12) - January is 1, December is 12
+// - year (e.g., 2025)
+// - week_day (0-6) - Sunday is 0, Saturday is 6
+// - year_day (0-365)
+
+// Get components in local time
+</span><span class="kw">let </span>local_components = time_format::components_local(ts).unwrap();</code></pre></div><h4 id="formatting-a-timestamp"><a class="doc-anchor" href="#formatting-a-timestamp">§</a>Formatting a Timestamp</h4><h5 id="utc-time"><a class="doc-anchor" href="#utc-time">§</a>UTC Time</h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let </span>ts = time_format::now().unwrap();
+
+<span class="comment">// Basic date formatting
+</span><span class="kw">let </span>date = time_format::strftime_utc(<span class="string">"%Y-%m-%d"</span>, ts).unwrap();
+<span class="comment">// Example: "2025-05-20"
+
+// Time formatting
+</span><span class="kw">let </span>time = time_format::strftime_utc(<span class="string">"%H:%M:%S"</span>, ts).unwrap();
+<span class="comment">// Example: "14:30:45"
+
+// Combined date and time
+</span><span class="kw">let </span>datetime = time_format::strftime_utc(<span class="string">"%Y-%m-%d %H:%M:%S"</span>, ts).unwrap();
+<span class="comment">// Example: "2025-05-20 14:30:45"
+
+// Custom format
+</span><span class="kw">let </span>custom = time_format::strftime_utc(<span class="string">"%a, %d %b %Y %T %Z"</span>, ts).unwrap();
+<span class="comment">// Example: "Tue, 20 May 2025 14:30:45 UTC"</span></code></pre></div><h5 id="local-time"><a class="doc-anchor" href="#local-time">§</a>Local Time</h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let </span>ts = time_format::now().unwrap();
+
+<span class="comment">// Local time with timezone name
+</span><span class="kw">let </span>local_time = time_format::strftime_local(<span class="string">"%Y-%m-%d %H:%M:%S %Z"</span>, ts).unwrap();
+<span class="comment">// Example: "2025-05-20 09:30:45 PDT"</span></code></pre></div><h5 id="millisecond-precision"><a class="doc-anchor" href="#millisecond-precision">§</a>Millisecond Precision</h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let </span>ts_ms = time_format::now_ms().unwrap();
+
+<span class="comment">// Format with milliseconds in UTC
+</span><span class="kw">let </span>precise_time = time_format::strftime_ms_utc(<span class="string">"%Y-%m-%d %H:%M:%S.{ms}"</span>, ts_ms).unwrap();
+<span class="comment">// Example: "2025-05-20 14:30:45.123"
+
+// Format with milliseconds in local time
+</span><span class="kw">let </span>precise_local = time_format::strftime_ms_local(<span class="string">"%Y-%m-%d %H:%M:%S.{ms} %Z"</span>, ts_ms).unwrap();
+<span class="comment">// Example: "2025-05-20 09:30:45.123 PDT"</span></code></pre></div><h4 id="iso-8601-formatting"><a class="doc-anchor" href="#iso-8601-formatting">§</a>ISO 8601 Formatting</h4>
+<p>Format timestamps according to ISO 8601 standard:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let </span>ts = time_format::now().unwrap();
+<span class="kw">let </span>ts_ms = time_format::now_ms().unwrap();
+
+<span class="comment">// ISO 8601 in UTC
+</span><span class="kw">let </span>iso8601 = time_format::format_iso8601_utc(ts).unwrap();
+<span class="comment">// Example: "2025-05-20T14:30:45Z"
+
+// ISO 8601 with milliseconds in UTC
+</span><span class="kw">let </span>iso8601_ms = time_format::format_iso8601_ms_utc(ts_ms).unwrap();
+<span class="comment">// Example: "2025-05-20T14:30:45.123Z"
+
+// ISO 8601 in local timezone
+</span><span class="kw">let </span>iso8601_local = time_format::format_iso8601_local(ts).unwrap();
+<span class="comment">// Example: "2025-05-20T09:30:45-05:00"
+
+// ISO 8601 with milliseconds in local timezone
+</span><span class="kw">let </span>iso8601_ms_local = time_format::format_iso8601_ms_local(ts_ms).unwrap();
+<span class="comment">// Example: "2025-05-20T09:30:45.123-05:00"</span></code></pre></div><h4 id="common-date-formats"><a class="doc-anchor" href="#common-date-formats">§</a>Common Date Formats</h4>
+<p>The crate provides convenient formatting for common date formats:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let </span>ts = time_format::now().unwrap();
+<span class="kw">let </span>ts_ms = time_format::now_ms().unwrap();
+
+<span class="comment">// RFC 3339 (similar to ISO 8601)
+</span><span class="kw">let </span>rfc3339 = time_format::format_common_utc(ts, time_format::DateFormat::RFC3339).unwrap();
+<span class="comment">// Example: "2025-05-20T14:30:45Z"
+
+// RFC 2822 format (email format)
+</span><span class="kw">let </span>rfc2822 = time_format::format_common_utc(ts, time_format::DateFormat::RFC2822).unwrap();
+<span class="comment">// Example: "Tue, 20 May 2025 14:30:45 +0000"
+
+// HTTP date format (RFC 7231)
+</span><span class="kw">let </span>http_date = time_format::format_common_utc(ts, time_format::DateFormat::HTTP).unwrap();
+<span class="comment">// Example: "Tue, 20 May 2025 14:30:45 GMT"
+
+// SQL date format
+</span><span class="kw">let </span>sql_format = time_format::format_common_utc(ts, time_format::DateFormat::SQL).unwrap();
+<span class="comment">// Example: "2025-05-20 14:30:45"
+
+// US date format
+</span><span class="kw">let </span>us_format = time_format::format_common_local(ts, time_format::DateFormat::US).unwrap();
+<span class="comment">// Example: "05/20/2025 02:30:45 PM"
+
+// European date format
+</span><span class="kw">let </span>eu_format = time_format::format_common_local(ts, time_format::DateFormat::European).unwrap();
+<span class="comment">// Example: "20/05/2025 14:30:45"
+
+// With millisecond precision
+</span><span class="kw">let </span>rfc3339_ms = time_format::format_common_ms_utc(ts_ms, time_format::DateFormat::RFC3339).unwrap();
+<span class="comment">// Example: "2025-05-20T14:30:45.123Z"
+
+// Custom format
+</span><span class="kw">let </span>custom = time_format::format_common_utc(ts, time_format::DateFormat::Custom(<span class="string">"%Y/%m/%d"</span>)).unwrap();
+<span class="comment">// Example: "2025/05/20"</span></code></pre></div>
+<p>Available format types:</p>
+<ul>
+<li><code>RFC3339</code>: ISO 8601-like format</li>
+<li><code>RFC2822</code>: Email date format</li>
+<li><code>HTTP</code>: Web standard date format</li>
+<li><code>SQL</code>: SQL database format</li>
+<li><code>US</code>: US style date format (MM/DD/YYYY)</li>
+<li><code>European</code>: European style date format (DD/MM/YYYY)</li>
+<li><code>ShortDate</code>: Short date (MM/DD/YY)</li>
+<li><code>LongDate</code>: Long date with full month and day names</li>
+<li><code>ShortTime</code>: Hours and minutes</li>
+<li><code>LongTime</code>: Hours, minutes, and seconds</li>
+<li><code>DateTime</code>: ISO-like date and time</li>
+<li><code>Custom</code>: Custom format string</li>
+</ul>
+<h3 id="common-format-directives"><a class="doc-anchor" href="#common-format-directives">§</a>Common Format Directives</h3><div><table><thead><tr><th>Directive</th><th>Description</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>%Y</code></td><td>Year (4 digits)</td><td>2025</td></tr>
+<tr><td><code>%m</code></td><td>Month (01-12)</td><td>05</td></tr>
+<tr><td><code>%d</code></td><td>Day of month (01-31)</td><td>20</td></tr>
+<tr><td><code>%H</code></td><td>Hour (00-23)</td><td>14</td></tr>
+<tr><td><code>%M</code></td><td>Minute (00-59)</td><td>30</td></tr>
+<tr><td><code>%S</code></td><td>Second (00-59)</td><td>45</td></tr>
+<tr><td><code>%a</code></td><td>Abbreviated weekday</td><td>Tue</td></tr>
+<tr><td><code>%A</code></td><td>Full weekday</td><td>Tuesday</td></tr>
+<tr><td><code>%b</code></td><td>Abbreviated month</td><td>May</td></tr>
+<tr><td><code>%B</code></td><td>Full month</td><td>May</td></tr>
+<tr><td><code>%c</code></td><td>Locale date and time</td><td>Tue May 20 14:30:45 2025</td></tr>
+<tr><td><code>%Z</code></td><td>Timezone name</td><td>UTC, PDT, etc.</td></tr>
+<tr><td><code>%z</code></td><td>Timezone offset</td><td>+0000, -0500</td></tr>
+<tr><td><code>{ms}</code></td><td>Milliseconds (custom extension)</td><td>123</td></tr>
+</tbody></table>
+</div><h3 id="comparison-with-other-time-libraries"><a class="doc-anchor" href="#comparison-with-other-time-libraries">§</a>Comparison with Other Time Libraries</h3><div><table><thead><tr><th>Feature</th><th>time-format</th><th>chrono</th><th>time</th></tr></thead><tbody>
+<tr><td>Dependencies</td><td>None</td><td>Multiple</td><td>Multiple</td></tr>
+<tr><td>ISO 8601</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>RFC 2822/3339</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>Milliseconds</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>Local timezone</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>Custom formats</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>Binary size impact</td><td>Very Small</td><td>Larger</td><td>Medium</td></tr>
+<tr><td>Compile time</td><td>Fast</td><td>Slower</td><td>Medium</td></tr>
+</tbody></table>
+</div>
+<p><code>time-format</code> is designed to be a lightweight alternative when you only need basic timestamp formatting capabilities without pulling in additional dependencies.</p>
+<h3 id="related-crates"><a class="doc-anchor" href="#related-crates">§</a>Related Crates</h3>
+<ul>
+<li><a href="https://crates.io/crates/coarsetime">coarsetime</a> - A minimal crate to get timestamps and perform basic operations on them</li>
+<li><a href="https://crates.io/crates/chrono">chrono</a> - Complete date and time library with calendar feature support</li>
+<li><a href="https://crates.io/crates/time">time</a> - A comprehensive time library with timezone database support</li>
+</ul>
+<h3 id="examples"><a class="doc-anchor" href="#examples">§</a>Examples</h3><h4 id="working-with-web-apis"><a class="doc-anchor" href="#working-with-web-apis">§</a>Working with Web APIs</h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>time_format::{format_iso8601_utc, now};
+
+<span class="kw">fn </span>main() -&gt; <span class="prelude-ty">Result</span>&lt;(), Box&lt;<span class="kw">dyn </span>std::error::Error&gt;&gt; {
+    <span class="comment">// Get current time
+    </span><span class="kw">let </span>current_time = now()<span class="question-mark">?</span>;
+
+    <span class="comment">// Format as ISO 8601 for API request
+    </span><span class="kw">let </span>timestamp = format_iso8601_utc(current_time)<span class="question-mark">?</span>;
+
+    <span class="macro">println!</span>(<span class="string">"API Request time: {}"</span>, timestamp);
+    <span class="comment">// Example output: "2025-05-20T14:30:45Z"
+
+    // Now you can use this timestamp in your API requests
+    // let response = make_api_request(timestamp);
+
+    </span><span class="prelude-val">Ok</span>(())
+}</code></pre></div><h4 id="converting-from-systemtime-in-network-applications"><a class="doc-anchor" href="#converting-from-systemtime-in-network-applications">§</a>Converting from SystemTime in Network Applications</h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::time::{SystemTime, Duration};
+<span class="kw">use </span>time_format::{from_system_time_ms, format_iso8601_ms_utc, strftime_ms_utc};
+
+<span class="comment">// Example of tracking network response times
+</span><span class="kw">fn </span>measure_network_response() -&gt; <span class="prelude-ty">Result</span>&lt;(), Box&lt;<span class="kw">dyn </span>std::error::Error&gt;&gt; {
+    <span class="comment">// Record start time
+    </span><span class="kw">let </span>start_time = SystemTime::now();
+
+    <span class="comment">// Simulate a network request
+    // In a real application, this would be an actual HTTP request
+    </span>std::thread::sleep(Duration::from_millis(<span class="number">237</span>));
+
+    <span class="comment">// Record end time
+    </span><span class="kw">let </span>end_time = SystemTime::now();
+
+    <span class="comment">// Convert to TimeStampMs
+    </span><span class="kw">let </span>start_ts = from_system_time_ms(start_time)<span class="question-mark">?</span>;
+    <span class="kw">let </span>end_ts = from_system_time_ms(end_time)<span class="question-mark">?</span>;
+
+    <span class="comment">// Calculate duration
+    </span><span class="kw">let </span>duration_ms = end_ts.total_milliseconds() - start_ts.total_milliseconds();
+
+    <span class="comment">// Log with ISO 8601 timestamps
+    </span><span class="macro">println!</span>(<span class="string">"Network request at: {}"</span>, format_iso8601_ms_utc(start_ts)<span class="question-mark">?</span>);
+    <span class="macro">println!</span>(<span class="string">"Response received at: {}"</span>, format_iso8601_ms_utc(end_ts)<span class="question-mark">?</span>);
+    <span class="macro">println!</span>(<span class="string">"Request took: {}ms"</span>, duration_ms);
+
+    <span class="comment">// Custom formatting for logging
+    </span><span class="kw">let </span>log_line = <span class="macro">format!</span>(
+        <span class="string">"[{}] Request completed in {}ms"</span>,
+        strftime_ms_utc(<span class="string">"%Y-%m-%d %H:%M:%S.{ms}"</span>, end_ts)<span class="question-mark">?</span>,
+        duration_ms
+    );
+    <span class="macro">println!</span>(<span class="string">"{}"</span>, log_line);
+    <span class="comment">// Example: "[2025-05-20 14:30:45.123] Request completed in 237ms"
+
+    </span><span class="prelude-val">Ok</span>(())
+}</code></pre></div><h4 id="logging-with-timestamps"><a class="doc-anchor" href="#logging-with-timestamps">§</a>Logging with Timestamps</h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>time_format::{DateFormat, format_common_ms_local, now_ms};
+
+<span class="kw">fn </span>log_message(level: <span class="kw-2">&amp;</span>str, message: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(), Box&lt;<span class="kw">dyn </span>std::error::Error&gt;&gt; {
+    <span class="comment">// Get current time with millisecond precision
+    </span><span class="kw">let </span>current_time = now_ms()<span class="question-mark">?</span>;
+
+    <span class="comment">// Format with milliseconds for logging
+    </span><span class="kw">let </span>timestamp = format_common_ms_local(current_time, DateFormat::DateTime)<span class="question-mark">?</span>;
+
+    <span class="macro">println!</span>(<span class="string">"[{}] {} - {}"</span>, timestamp, level, message);
+    <span class="comment">// Example output: "[2025-05-20 09:30:45.123] INFO - Application started"
+
+    </span><span class="prelude-val">Ok</span>(())
+}
+
+<span class="kw">fn </span>main() -&gt; <span class="prelude-ty">Result</span>&lt;(), Box&lt;<span class="kw">dyn </span>std::error::Error&gt;&gt; {
+    log_message(<span class="string">"INFO"</span>, <span class="string">"Application started"</span>)<span class="question-mark">?</span>;
+    log_message(<span class="string">"DEBUG"</span>, <span class="string">"Configuration loaded"</span>)<span class="question-mark">?</span>;
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div><h3 id="contributing"><a class="doc-anchor" href="#contributing">§</a>Contributing</h3>
+<p>Contributions are welcome! Please feel free to submit a Pull Request.</p>
+<h3 id="license"><a class="doc-anchor" href="#license">§</a>License</h3>
+<p>This project is licensed under the <a href="LICENSE">MIT License</a>.</p>
+<hr />
+<p><em>Note: This crate uses FFI bindings to C’s time functions. It’s designed to be lightweight and efficient, but it does not include a timezone database. For applications requiring extensive timezone handling, consider <code>chrono</code> or <code>time</code>.</em></p>
+</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.Components.html" title="struct time_format::Components">Components</a></dt><dd>Time components.</dd><dt><a class="struct" href="struct.TimeStampMs.html" title="struct time_format::TimeStampMs">Time<wbr>Stamp<wbr>Ms</a></dt><dd>A UNIX timestamp with millisecond precision.</dd></dl><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><dl class="item-table"><dt><a class="enum" href="enum.DateFormat.html" title="enum time_format::DateFormat">Date<wbr>Format</a></dt><dd>Format types for common date strings</dd><dt><a class="enum" href="enum.Error.html" title="enum time_format::Error">Error</a></dt></dl><h2 id="functions" class="section-header">Functions<a href="#functions" class="anchor">§</a></h2><dl class="item-table"><dt><a class="fn" href="fn.components_local.html" title="fn time_format::components_local">components_<wbr>local</a></dt><dd>Split a timestamp into its components in the local timezone.</dd><dt><a class="fn" href="fn.components_utc.html" title="fn time_format::components_utc">components_<wbr>utc</a></dt><dd>Split a timestamp into its components in UTC timezone.</dd><dt><a class="fn" href="fn.format_common_local.html" title="fn time_format::format_common_local">format_<wbr>common_<wbr>local</a></dt><dd>Format a timestamp using a common date format in local timezone</dd><dt><a class="fn" href="fn.format_common_ms_local.html" title="fn time_format::format_common_ms_local">format_<wbr>common_<wbr>ms_<wbr>local</a></dt><dd>Format a timestamp with millisecond precision using a common date format in local timezone</dd><dt><a class="fn" href="fn.format_common_ms_utc.html" title="fn time_format::format_common_ms_utc">format_<wbr>common_<wbr>ms_<wbr>utc</a></dt><dd>Format a timestamp with millisecond precision using a common date format in UTC timezone</dd><dt><a class="fn" href="fn.format_common_utc.html" title="fn time_format::format_common_utc">format_<wbr>common_<wbr>utc</a></dt><dd>Format a timestamp using a common date format in UTC timezone</dd><dt><a class="fn" href="fn.format_iso8601_local.html" title="fn time_format::format_iso8601_local">format_<wbr>iso8601_<wbr>local</a></dt><dd>Format a timestamp according to ISO 8601 format in the local timezone.</dd><dt><a class="fn" href="fn.format_iso8601_ms_local.html" title="fn time_format::format_iso8601_ms_local">format_<wbr>iso8601_<wbr>ms_<wbr>local</a></dt><dd>Format a timestamp with millisecond precision according to ISO 8601 format in the local timezone.</dd><dt><a class="fn" href="fn.format_iso8601_ms_utc.html" title="fn time_format::format_iso8601_ms_utc">format_<wbr>iso8601_<wbr>ms_<wbr>utc</a></dt><dd>Format a timestamp with millisecond precision according to ISO 8601 format in UTC.</dd><dt><a class="fn" href="fn.format_iso8601_utc.html" title="fn time_format::format_iso8601_utc">format_<wbr>iso8601_<wbr>utc</a></dt><dd>Format a timestamp according to ISO 8601 format in UTC.</dd><dt><a class="fn" href="fn.from_system_time.html" title="fn time_format::from_system_time">from_<wbr>system_<wbr>time</a></dt><dd>Convert a <code>std::time::SystemTime</code> to a UNIX timestamp in seconds.</dd><dt><a class="fn" href="fn.from_system_time_ms.html" title="fn time_format::from_system_time_ms">from_<wbr>system_<wbr>time_<wbr>ms</a></dt><dd>Convert a <code>std::time::SystemTime</code> to a UNIX timestamp with millisecond precision.</dd><dt><a class="fn" href="fn.now.html" title="fn time_format::now">now</a></dt><dd>Return the current UNIX timestamp in seconds.</dd><dt><a class="fn" href="fn.now_ms.html" title="fn time_format::now_ms">now_ms</a></dt><dd>Return the current UNIX timestamp with millisecond precision.</dd><dt><a class="fn" href="fn.strftime_local.html" title="fn time_format::strftime_local">strftime_<wbr>local</a></dt><dd>Return the current time in the specified format, in the local time zone.
+The time is assumed to be the number of seconds since the Epoch.</dd><dt><a class="fn" href="fn.strftime_ms_local.html" title="fn time_format::strftime_ms_local">strftime_<wbr>ms_<wbr>local</a></dt><dd>Return the current time in the specified format, in the local time zone,
+with support for custom millisecond formatting.</dd><dt><a class="fn" href="fn.strftime_ms_utc.html" title="fn time_format::strftime_ms_utc">strftime_<wbr>ms_<wbr>utc</a></dt><dd>Return the current time in the specified format, in the UTC time zone,
+with support for custom millisecond formatting.</dd><dt><a class="fn" href="fn.strftime_utc.html" title="fn time_format::strftime_utc">strftime_<wbr>utc</a></dt><dd>Return the current time in the specified format, in the UTC time zone.
+The time is assumed to be the number of seconds since the Epoch.</dd><dt><a class="fn" href="fn.validate_format.html" title="fn time_format::validate_format">validate_<wbr>format</a></dt><dd>Validates a strftime format string for correct syntax.
+This performs a basic validation to catch common errors.</dd></dl><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><dl class="item-table"><dt><a class="type" href="type.TimeStamp.html" title="type time_format::TimeStamp">Time<wbr>Stamp</a></dt><dd>A UNIX timestamp in seconds.</dd></dl></section></div></main></body></html>

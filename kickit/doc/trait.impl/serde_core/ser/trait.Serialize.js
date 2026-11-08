@@ -1,0 +1,9 @@
+(function() {
+    const implementors = Object.fromEntries([["serde",[]],["serde_core",[]],["serde_spanned",[["impl&lt;T: <a class=\"trait\" href=\"serde_core/ser/trait.Serialize.html\" title=\"trait serde_core::ser::Serialize\">Serialize</a>&gt; <a class=\"trait\" href=\"serde_core/ser/trait.Serialize.html\" title=\"trait serde_core::ser::Serialize\">Serialize</a> for <a class=\"struct\" href=\"serde_spanned/struct.Spanned.html\" title=\"struct serde_spanned::Spanned\">Spanned</a>&lt;T&gt;",0]]],["toml",[["impl <a class=\"trait\" href=\"serde_core/ser/trait.Serialize.html\" title=\"trait serde_core::ser::Serialize\">Serialize</a> for <a class=\"type\" href=\"toml/type.Table.html\" title=\"type toml::Table\">Table</a>",0],["impl <a class=\"trait\" href=\"serde_core/ser/trait.Serialize.html\" title=\"trait serde_core::ser::Serialize\">Serialize</a> for <a class=\"enum\" href=\"toml/enum.Value.html\" title=\"enum toml::Value\">Value</a>",0]]],["toml_datetime",[["impl <a class=\"trait\" href=\"serde_core/ser/trait.Serialize.html\" title=\"trait serde_core::ser::Serialize\">Serialize</a> for <a class=\"struct\" href=\"toml_datetime/struct.Date.html\" title=\"struct toml_datetime::Date\">Date</a>",0],["impl <a class=\"trait\" href=\"serde_core/ser/trait.Serialize.html\" title=\"trait serde_core::ser::Serialize\">Serialize</a> for <a class=\"struct\" href=\"toml_datetime/struct.Datetime.html\" title=\"struct toml_datetime::Datetime\">Datetime</a>",0],["impl <a class=\"trait\" href=\"serde_core/ser/trait.Serialize.html\" title=\"trait serde_core::ser::Serialize\">Serialize</a> for <a class=\"struct\" href=\"toml_datetime/struct.Time.html\" title=\"struct toml_datetime::Time\">Time</a>",0]]]]);
+    if (window.register_implementors) {
+        window.register_implementors(implementors);
+    } else {
+        window.pending_implementors = implementors;
+    }
+})()
+//{"start":59,"fragment_lengths":[12,18,411,453,758]}
