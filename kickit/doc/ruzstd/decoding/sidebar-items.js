@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["BlockDecodingStrategy"],"mod":["errors"],"struct":["Dictionary","FrameDecoder","StreamingDecoder"]};

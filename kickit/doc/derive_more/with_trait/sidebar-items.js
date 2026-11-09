@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"derive":["Binary","Deref","DerefMut","Display","LowerExp","LowerHex","Octal","Pointer","UpperExp","UpperHex"]};

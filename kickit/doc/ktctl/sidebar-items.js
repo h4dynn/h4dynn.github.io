@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Operation","Usage"],"fn":["main","parseArgs"],"struct":["Init"],"trait":["RunOperation"]};
+window.SIDEBAR_ITEMS = {"mod":["console","service","socket"]};

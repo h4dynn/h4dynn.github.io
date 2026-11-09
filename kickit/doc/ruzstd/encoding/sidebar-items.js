@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["CompressionLevel","Sequence"],"fn":["compress","compress_to_vec"],"struct":["FrameCompressor","MatchGeneratorDriver"],"trait":["Matcher"]};
