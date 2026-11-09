@@ -1,0 +1,3 @@
+[submodule "kickit/src"]
+	path = kickit/src
+	url = https://github.com/h4dynn/kickit
